@@ -18,25 +18,26 @@ This code is a supplement to [**J. Zou, E. Lourens, A. Cicirello (2022). "Virtua
 
 **Modules:**
 
-    `model` : functions which specify geometric and material properties (mass, stiffness, damping) of the structural system
+`model` : functions which specify geometric and material properties (mass, stiffness, damping) of the structural system  
 
-    `load` : functions which define the form, magnitude, and location of externally applied forces/inputs
+`load` : functions which define the form, magnitude, and location of externally applied forces/inputs  
 
-    `ss` : functions which assemble the state-space matrices of the structural model, including the modally reduced-order formulation
+`ss` : functions which assemble the state-space matrices of the structural model, including the modally reduced-order formulation  
 
-    `rs` : functions which simulate dynamic response (e. g. Newmark average acceleration method)
+`rs` : functions which simulate dynamic response (e. g. Newmark average acceleration method)  
 
-    `kernel`: functions which assemble the state-space matrices of a GP expressed as a linear time-invariant stochastic differential equation (SDE), based on a chosen covariance kernel function
+`kernel`: functions which assemble the state-space matrices of a GP expressed as a linear time-invariant stochastic differential equation (SDE), based on a chosen covariance kernel function  
 
-    `hp` : functions which solve for hyperparameters of the GP covariance kernel
+`hp` : functions which solve for hyperparameters of the GP covariance kernel  
 
-    `id` : functions which perform joint input-state estimation
+`id` : functions which perform joint input-state estimation  
 
-    `plot` : functions for plotting results
+`plot` : functions for plotting results  
 
 
-## Documentation
+**Example:**
 
+![input.png](/figures/input.png)
 
 
 
