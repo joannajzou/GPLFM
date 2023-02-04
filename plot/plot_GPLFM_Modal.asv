@@ -1,0 +1,266 @@
+% plot parameters
+lw = 1.5;                   % linewidth
+tlim = [200 300];           % plot bounds on time axis (for zoom)
+flim = [0 1.2];             % plot bounds on freq. axis 
+d = 5;                      % dof of response states to plot 
+orange = [230 159 0]/255;   % custom color
+
+%% PLOT 1: mode shapes %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+fig = figure;
+set(gcf, 'Position', [100, 100, 500, 350]);
+tiledlayout(1,3,'TileSpacing', 'loose', 'Padding', 'compact');
+
+% Mdl.Phi_r(:,3) = -Mdl.Phi_r(:,3);
+
+for i = 1:nmodes
+    ax = nexttile;
+    plot([0; Mdl.Phi_r(:,i) / max(abs(Mdl.Phi_r(:,i)))], 0:ndof, 'o-', 'Color', 'k', 'Linewidth', lw, 'MarkerFaceColor', 'k');
+    xline(0, 'Color', [0.7 0.7 0.7]);
+    xlim([-1.2 1.2]);
+    title(sprintf("Mode %g", i));
+    if i == 1; ylabel("height"); end
+end
+
+
+
+%% PLOT 2: response time history %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+fig = figure;
+set(gcf, 'Position', [100, 100, 850, 500]);
+tiledlayout(3,2,'TileSpacing', 'compact', 'Padding', 'compact');
+
+
+%% displ. estimate history
+
+% time series
+ax1a = nexttile; 
+
+    % reference
+    plot(time, x_sim_n(d,:),'k','Linewidth',lw); hold on
+    
+    % prediction
+    plot(time, x_r(d,:), '--r','Linewidth',lw);
+    sig_r = zeros(1,nsteps);
+    for k = 1:nsteps
+        cov_n = Mdl.Transf * cov_r{k}(1:Mdl.nx,1:Mdl.nx) * Mdl.Transf';
+        sig_r(k) = sqrt(cov_n(d,d));
+    end
+    ytop = x_r(d,:) + sig_r; ybot = x_r(d,:) - sig_r;
+    patch([time'; flipud(time')],[ytop'; flipud(ybot')], 'r', 'FaceAlpha', 0.1, 'EdgeColor', 'none');  
+    
+    % labels
+    ylabel('d(t)');
+    ttl = title(sprintf("Displacement at level %g", d)); 
+    ttl.Units = 'Normalize'; 
+    ttl.Position(1) = 0; 
+    ttl.HorizontalAlignment = 'left';  
+    xlim(tlim);
+
+% frequency spectrum
+ax1b = nexttile;
+win = hann(fix((nsteps)/8));
+
+    % reference
+    [psd,f] = pwelch(x_sim_n(d,:),win,fix(length(win)/2),[],fs,'power');
+    semilogy(f, psd, 'k', 'Linewidth', lw); hold on
+    
+    % prediction
+    [psd,f] = pwelch(x_r(d,:),win,fix(length(win)/2),[],fs,'power');
+    semilogy(f, psd, '--r', 'Linewidth', lw);
+    
+    % labels
+    xlim(flim);
+    ylabel('PSD');
+
+
+%% vel. estimate history 
+
+% time series
+ax2a = nexttile; 
+
+    % reference
+    plot(time, x_sim_n(d+10,:),'k','Linewidth',lw); hold on
+    
+    % prediction
+    plot(time, x_r(d+10,:), '--r','Linewidth',lw);
+    sig_r = zeros(1,nsteps);
+    for k = 1:nsteps
+        cov_n = Mdl.Transf * cov_r{k}(1:Mdl.nx,1:Mdl.nx) * Mdl.Transf';
+        sig_r(k) = sqrt(cov_n(d+10,d+10));
+    end
+    ytop = x_r(d+10,:) + sig_r; ybot = x_r(d+10,:) - sig_r;
+    patch([time'; flipud(time')],[ytop'; flipud(ybot')], 'r', 'FaceAlpha', 0.1, 'EdgeColor', 'none');
+
+    % labels
+    ylabel('v(t)'); 
+    ttl = title(sprintf("Velocity at level %g", d));
+    ttl.Units = 'Normalize'; 
+    ttl.Position(1) = 0; 
+    ttl.HorizontalAlignment = 'left';  
+    xlim(tlim);
+
+
+% frequency spectrum
+ax2b = nexttile;
+
+    % reference
+    [psd,f] = pwelch(x_sim_n(d+10,:),win,fix(length(win)/2),[],fs,'power');
+    semilogy(f, psd, 'k', 'Linewidth', lw); hold on
+    
+    % prediction
+    [psd,f] = pwelch(x_r(d+10,:),win,fix(length(win)/2),[],fs,'power');
+    semilogy(f, psd, '--r', 'Linewidth', lw);
+    
+    % labels
+    xlim(flim);
+    ylabel('PSD');
+
+
+%% acceleration measurement history
+
+% time series
+ax3a = nexttile; 
+
+    % reference 
+    plot(time, y_sim_n(d,:),'k','Linewidth',lw); hold on
+    
+    % prediction
+    plot(time, a_r(d,:), '--r','Linewidth',lw);
+    sig_acc = zeros(1,nsteps);
+    for k = 1:nsteps
+        sig_acc(k) = sqrt(cova_r{k}(d,d));
+    end
+    ytop = a_r(d,:) + sig_acc; ybot = a_r(d,:) - sig_acc;
+    patch([time'; flipud(time')],[ytop'; flipud(ybot')], 'r', 'FaceAlpha', 0.1, 'EdgeColor', 'none');
+
+    % measurements
+    if ismember(d, Sa_dofs)
+        plot(t_n, acc_n(d,:), 'o', 'Color', orange);
+    end
+
+    % labels
+    xlabel('t');
+    ylabel('a(t)');
+    legend(["true", "estimated", "measurements"], 'Location', 'northwest');
+    
+    ttl = title(sprintf("Acceleration at level %g", d)); 
+    ttl.Units = 'Normalize'; 
+    ttl.Position(1) = 0;
+    ttl.HorizontalAlignment = 'left';  
+    xlim(tlim);
+
+
+% frequency spectrum
+ax3b = nexttile;
+
+    % reference
+    [psd,f] = pwelch(y_sim_n(d,:),win,fix(length(win)/2),[],fs,'power');
+    semilogy(f, psd, 'k', 'Linewidth', lw); hold on
+    
+    % prediction
+    [psd,f] = pwelch(a_r(d,:),win,fix(length(win)/2),[],fs,'power');
+    semilogy(f, psd, '--r', 'Linewidth', lw);
+    
+    % labels
+    xlabel('f (Hz)');
+    xlim(flim);
+    ylabel('PSD');
+    legend(["true", "estimated"], 'Location', 'northeast');
+
+
+
+%% PLOT 3: modal force time history %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+fig = figure;
+set(gcf, 'Position', [100, 100, 850, 500]);
+tiledlayout(3,2,'TileSpacing', 'compact', 'Padding', 'compact');
+
+
+for i = 1:nmodes
+
+    % time series
+    ax1 = nexttile;
+        
+        % reference
+        plot(time, f_true(i,:), 'k', 'Linewidth', lw); hold on
+
+        % prediction
+        plot(time, f_r(i,:), '--r', 'Linewidth',lw);
+        sig_r = zeros(1,nsteps);
+        d_ri = d_r + (i-1)*3;
+        for k = 1:nsteps
+            sig_r(k) = sqrt(cov_r{k}(d_ri, d_ri));
+        end
+        ytop = f_r(i,:) + sig_r; ybot = f_r(i,:) - sig_r;
+        patch([time'; flipud(time')],[ytop'; flipud(ybot')], 'r', 'FaceAlpha', 0.1, 'EdgeColor', 'none'); 
+
+        % labels
+        ylabel(sprintf('f_{%g}(t)', i));
+        xlim(tlim);
+        if i == 3
+            legend("true", "estimated");
+            xlabel('t');
+        end
+
+    % frequency spectrum
+    ax2 = nexttile;
+
+        % reference
+        [psd,f] = pwelch(f_true(i,:),win,fix(length(win)/2),[],fs,'power');
+        semilogy(f, psd, 'k', 'Linewidth', lw); hold on
+        
+        % prediction
+        [psd,f] = pwelch(f_r(i,:),win,fix(length(win)/2),[],fs,'power');
+        semilogy(f, psd, '--r', 'Linewidth', lw);
+        
+        % natural frequencies of system 
+        xline(Mdl.f(i), 'Linewidth', lw, 'Color', [0.7 0.7 0.7]);
+
+        % labels
+        xlim(flim);
+        ylabel('PSD');
+        if i == 3
+            legend("true", "estimated", "modal freq.")
+            xlabel('f (Hz)');
+        end
+
+end
+
+
+
+%% PLOT 4: GP hyperparameters %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+n = 15;                 % surface discretization
+[opt.meshX, opt.meshY, opt.meshZ] = plot_HPSurface(opt.bounds, n, opt.objective);
+
+fig = figure(); box on
+set(gcf, 'Position', [100, 100, 400, 300]);
+
+% plot objective function (Hellinger dist.) across search domain
+surf(opt.meshX,opt.meshY,log(opt.meshZ)); hold on
+
+% plot optimum HP
+scatter3(opt.hp_opt(1,opt.idx), opt.hp_opt(2,opt.idx), log(opt.fmin), 'r', 'MarkerFaceColor', 'r'); 
+
+% plot initial HP
+scatter3(opt.hp0(1,opt.idx), opt.hp0(2,opt.idx), log(opt.objective(opt.hp0_norm(:,opt.idx))), 'g', 'MarkerFaceColor', 'g');
+
+% plot search trajectory
+hh = hp_rescale(opt.hp_hist{opt.idx},[],opt.bounds);
+plot3(hh(1,:), hh(2,:), log(opt.fval_hist{opt.idx}), 'x');
+hold off
+
+% labels
+xlabel("$\alpha$", 'interpreter', 'latex'); % xlim([0 50]);
+ylabel("$l_s$", 'interpreter', 'latex');
+zlabel("$log(\phi(\theta))$", 'interpreter', 'latex');
+legend("surface", "optimum", "initial point", "iterations");
+title("Hyperparameter Tuning")
+
+
+
+
+
+
+
