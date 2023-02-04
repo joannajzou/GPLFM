@@ -2,7 +2,7 @@
 
 A MATLAB implementation of the Gaussian process latent force model (GPLFM). 
 
-The GPFLM a Bayesian joint input-state estimator which infers the dynamic response of a structural system subject to unknown excitation. An augmented state-space model, which combines a physics-driven model of the structural system with a data-driven model of latent variables, characterizes the joint relationship between inputs and states with a GP prior. Posterior inference of latent variables, including the unknown input and unmeasured states, is then obtained via Gaussian process regression of measured states, performd sequentially using Kalman filtering and RTS smoothing. 
+The GPFLM a Bayesian joint input-state estimator which infers the dynamic response of a structural system subject to unknown excitation. An augmented state-space model, which combines a physics-driven model of the structural system with a data-driven model of latent variables, characterizes the joint relationship between unknown inputs and states with a GP prior. Posterior inference of latent variables is obtained via Gaussian process regression of measured states, performed sequentially using Kalman filtering and RTS smoothing. 
 
 This code is a supplement to [**J. Zou, E. Lourens, A. Cicirello (2022). "Virtual sensing of subsoil strain response in monopile-based offshore wind turbines via Gaussian process latent force models."**](https://arxiv.org/abs/2207.05901) Please cite this work if you use or refer to any parts of this repository. 
 
@@ -16,7 +16,8 @@ This code is a supplement to [**J. Zou, E. Lourens, A. Cicirello (2022). "Virtua
 **Getting started:** Run the file `run_GPLFM_Modal.m` in MATLAB.
 
 
-**Modules**
+**Modules:**
+
     `model` : functions which specify geometric and material properties (mass, stiffness, damping) of the structural system
 
     `load` : functions which define the form, magnitude, and location of externally applied forces/inputs
@@ -34,7 +35,7 @@ This code is a supplement to [**J. Zou, E. Lourens, A. Cicirello (2022). "Virtua
     `plot` : functions for plotting results
 
 
-**Example**
+## Documentation
 
 
 
