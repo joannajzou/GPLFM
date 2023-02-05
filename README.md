@@ -46,15 +46,15 @@ Possible extensions include the definition of alternative models in `model`, the
 
 **Example**
 
-The provided numerical example implements the GPLFM to predict modal forces and response states (displacements, velocities, accelerations) of a 10-dof uniform cantilever structure with point masses $m$ and element stiffnesses $k$. The structure is expressed with a reduced-order model with $n_{mode} = 3$. Mass proportional damping with a modal damping ratio of $\xi$ is assumed at all degrees of freedom. 
+The provided numerical example implements the GPLFM to predict modal forces and dynamic response states (displacements, velocities, accelerations) of a 10-dof uniform cantilever structure with point masses $m$ and element stiffnesses $k$. The structure is expressed with a reduced-order model with $n_{mode} = 3$. Mass proportional damping with a modal damping ratio of $\xi$ is assumed at all degrees of freedom. 
 
-An artificial input is defined as the combination of a sinusoidal force applied at the top (10th) level of the model and a Gaussian process with a Matern $\nu = 5/2$ covariance kernel with parameters $ \{ \alpha, l_s \}$, applied to all levels of the model. The synthetic system is constructed to loosely represent environmental and operational load conditions on a wind turbine support structure, where the sinusoidal force represents the harmonic frequency of vibration induced by the rotor motion of the turbine and the GP force represents ambient wind excitation distributed along the height of the tower. The input is non-Gaussian due to the contribution of the sinusoidal force.
+An artificial input is defined as the combination of a sinusoidal force applied at the top (10th) level of the model and a Gaussian process with a Matern $\nu = 5/2$ covariance kernel with parameters $(\alpha, l_s)$, applied to all levels of the model. The input is non-Gaussian due to the contribution of the sinusoidal force.
 
 
 ![input](/figures/input.png)
 
 
-The ground truth response of the cantilever structure to the artificial load is simulated using the Newmark average acceleration method. It is assumed that acceleration states at levels 5 and 10 are available as measurement data. Hyperparameters $ \{ \alpha, l_s \}$ of the GP covariance kernel are fit using the method in Section 2.3.1 of J. Zou et al. (2022), which minimizes the Hellinger distance between the empirical normal distribution fit to the measurement data and modeled GP prior corresponding to the hyperparameters. It is observed that the optimal hyperparameters from the tuning process lead to a strong match between the empirical and modeled distributions over the measurement data.
+The ground truth response of the cantilever structure to the artificial load is simulated using the Newmark average acceleration method. It is assumed that acceleration states at levels 5 and 10 are available as measurement data. Hyperparameters $(\alpha, l_s)$ of the GP covariance kernel are fit using the method in Section 2.3.1 of J. Zou et al. (2022), which minimizes the Hellinger distance between the empirical normal distribution fit to the measurement data and modeled GP prior corresponding to the hyperparameters. It is observed that the optimal hyperparameters from the tuning process lead to a strong match between the empirical and modeled distributions over the measurement data.
 
 ![hptuning](/figures/hptuning.png)
 ![hpfit](/figures/hpfit.png)
@@ -68,7 +68,7 @@ Assuming the input is unknown and that only acceleration measurements are availa
 
 ## Contact
 
-Those interested in collaborating on this codebase are invited to reach out to Joanna Zou at [jjzou@mit.edu](mailto:jjzou@mit.edu).
+Those interested in collaborating on this repository are invited to reach out to Joanna Zou at [jjzou@mit.edu](mailto:jjzou@mit.edu).
 
 
 ## Primary references
