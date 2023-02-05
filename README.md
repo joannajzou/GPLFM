@@ -50,19 +50,25 @@ The provided numerical example implements the GPLFM to predict modal forces and 
 
 An artificial input is defined as the combination of a sinusoidal force applied at the top (10th) level of the model and a Gaussian process with a Matern $\nu = 5/2$ covariance kernel with parameters $(\alpha, l_s)$, applied to all levels of the model. The input is non-Gaussian due to the contribution of the sinusoidal force.
 
-
+Artificial input:
 ![input](/figures/input.png)
 
 
 The ground truth response of the cantilever structure to the artificial load is simulated using the Newmark average acceleration method. It is assumed that acceleration states at levels 5 and 10 are available as measurement data. Hyperparameters $(\alpha, l_s)$ of the GP covariance kernel are fit using the method in Section 2.3.1 of Zou et al. (2022), which minimizes the Hellinger distance between the empirical normal distribution fit to the measurement data and modeled GP prior corresponding to the hyperparameters. It is observed that the optimal hyperparameters from the tuning process lead to a strong match between the empirical and modeled distributions over the measurement data.
 
+Hyperparameter tuning: 
 ![hptuning](/figures/hptuning.png)
+
+Evaluating model fit: 
 ![hpfit](/figures/hpfit.png)
 
 
 Assuming the input is unknown and that only acceleration measurements are available, the GPLFM produces posterior estimates of response states, shown for level 5 of the structure, as well as of the first three modal components of the input. Since only $n_{mode} = 3$ modes are retained in the reduced-order model, accuracy in the frequency spectrum declines past the third natural frequency of the system. 
 
+Response states:
 ![responseestimation](/figures/responseestimation.png)
+
+Modal forces:
 ![modalforceestimation](/figures/modalforceestimation.png)
 
 
