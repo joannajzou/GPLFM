@@ -54,7 +54,7 @@ An artificial input is defined as the combination of a sinusoidal force applied 
 ![input](/figures/input.png)
 
 
-The ground truth response of the cantilever structure to the artificial load is simulated using the Newmark average acceleration method. It is assumed that acceleration states at levels 5 and 10 are available as measurement data. Hyperparameters $(\alpha, l_s)$ of the GP covariance kernel are fit using the method in Section 2.3.1 of J. Zou et al. (2022), which minimizes the Hellinger distance between the empirical normal distribution fit to the measurement data and modeled GP prior corresponding to the hyperparameters. It is observed that the optimal hyperparameters from the tuning process lead to a strong match between the empirical and modeled distributions over the measurement data.
+The ground truth response of the cantilever structure to the artificial load is simulated using the Newmark average acceleration method. It is assumed that acceleration states at levels 5 and 10 are available as measurement data. Hyperparameters $(\alpha, l_s)$ of the GP covariance kernel are fit using the method in Section 2.3.1 of Zou et al. (2022), which minimizes the Hellinger distance between the empirical normal distribution fit to the measurement data and modeled GP prior corresponding to the hyperparameters. It is observed that the optimal hyperparameters from the tuning process lead to a strong match between the empirical and modeled distributions over the measurement data.
 
 ![hptuning](/figures/hptuning.png)
 ![hpfit](/figures/hpfit.png)
@@ -64,6 +64,13 @@ Assuming the input is unknown and that only acceleration measurements are availa
 
 ![responseestimation](/figures/responseestimation.png)
 ![modalforceestimation](/figures/modalforceestimation.png)
+
+
+**Other examples**
+
+Zou et al. (2022) demonstrates an application of the GPLFM to the structural health monitoring of offshore wind turbines, which are subject to highly uncertain load conditions across operational and environmental conditions. In this context, fatigue assessment requires accurate estimation of strains which fall below the mudline of the monopile foundation, where instrumentation is impractical. The GPLFM is implemented to estimate subsoil strains and modal components of the unknown input.
+
+Users are referred to Appendix A.1, where the robustness of the GPLFM to model error is evaluated using numerical experiments in which perturbation in model parameters is introduced. 
 
 
 ## Contact
