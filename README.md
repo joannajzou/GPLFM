@@ -9,7 +9,7 @@ This code is a supplement to [**J. Zou, E. Lourens, A. Cicirello (2022). "Virtua
 
 **Version 0.1.0**
 
-Provides essential functions for implementing the GPLFM for joint input-state estimation using an MDOF cantilever system, cast into a modally reduced-order state-space model with acceleration-only measurements. 
+Provides essential functions for implementing the GPLFM for joint input-state estimation using an MDOF cantilever system, cast into a modally reduced-order state-space model with acceleration-only measurements. At this stage of development, the code is primarily useful as a starting point for further tool development and for instructional purposes. 
 
 
 ## Documentation
@@ -40,6 +40,9 @@ Run the file `run_GPLFM_Modal.m` in MATLAB (R2021a).
 * `plot` : functions for producing figures
 
 
+Possible extensions include the definition of alternative models in `model`, the definition of new load cases in `load`, additional state-space forms of GP covariance kernels in `kernel`, alternate methods of hyperparameter tuning (including maximum likelihood estimation or hierarchical Bayesian inference) in `hp`, and the introduction of other joint input-state estimation techniques in `id` for comparison with the GPLFM.
+
+
 
 **Example**
 
@@ -50,8 +53,6 @@ An artificial input is defined as the combination of a sinusoidal force applied 
 
 ![input](/figures/input.png)
 
-<img src="https://github.com/joannajzou/GPLFM/tree/main/figures/input.png" width="200" />
-
 
 The ground truth response of the cantilever structure to the artificial load is simulated using the Newmark average acceleration method. It is assumed that acceleration states at levels 5 and 10 are available as measurement data. Hyperparameters $ \{ \alpha, l_s \}$ of the GP covariance kernel are fit using the method in Section 2.3.1 of J. Zou et al. (2022), which minimizes the Hellinger distance between the empirical normal distribution fit to the measurement data and modeled GP prior corresponding to the hyperparameters. It is observed that the optimal hyperparameters from the tuning process lead to a strong match between the empirical and modeled distributions over the measurement data.
 
@@ -59,12 +60,15 @@ The ground truth response of the cantilever structure to the artificial load is 
 ![hpfit](/figures/hpfit.png)
 
 
-The GPLFM produces posterior estimates of response states, shown for level 5 of the structure, as well as of the first three modal forces. Since only $n_{mode} = 3$ modes are retained in the reduced-order model, accuracy in the frequency spectrum declines past the third natural frequency of the system. 
+Assuming the input is unknown and that only acceleration measurements are available, the GPLFM produces posterior estimates of response states, shown for level 5 of the structure, as well as of the first three modal components of the input. Since only $n_{mode} = 3$ modes are retained in the reduced-order model, accuracy in the frequency spectrum declines past the third natural frequency of the system. 
 
 ![responseestimation](/figures/responseestimation.png)
 ![modalforceestimation](/figures/modalforceestimation.png)
 
 
+## Contact
+
+Those interested in collaborating on this codebase are invited to reach out to Joanna Zou at [jjzou@mit.edu](mailto:jjzou@mit.edu).
 
 
 ## Primary references
