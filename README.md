@@ -74,9 +74,9 @@ Modal forces:
 
 **Other examples**
 
-Zou et al. (2022) demonstrates an application of the GPLFM to the structural health monitoring of offshore wind turbines, which are subject to highly uncertain load conditions across operational and environmental conditions. In this context, fatigue assessment requires accurate estimation of strains which fall below the mudline of the monopile foundation, where instrumentation is impractical. The GPLFM is implemented to estimate subsoil strains and modal components of the unknown input.
+Zou et al. (2022) demonstrates an application of the GPLFM to the structural health monitoring of offshore wind turbines, which are subject to highly uncertain load conditions across operational and environmental conditions. In this context, fatigue assessment requires accurate estimation of strains which fall below the mudline of the monopile foundation, where direct measurement by sensors is impractical. The GPLFM is implemented as a virtual sensing technique to estimate subsoil strains and modal components of the unknown input.
 
-Users are referred to Appendix A.1, where the robustness of the GPLFM to model error is evaluated using numerical experiments in which perturbation in model parameters is introduced. 
+In Appendix A.1, the robustness of the GPLFM to model error is evaluated using numerical experiments where perturbation in model parameters is introduced. 
 
 
 ## Contact
