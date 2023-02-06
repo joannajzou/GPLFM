@@ -9,7 +9,7 @@ This code is a supplement to [**J. Zou, E. Lourens, A. Cicirello (2022). "Virtua
 
 **Version 0.1.0**
 
-Provides essential functions for implementing the GPLFM for joint input-state estimation using an MDOF cantilever system, cast into a modally reduced-order state-space model with acceleration-only measurements. At this stage of development, the code is primarily useful as a starting point for further tool development and for instructional purposes. 
+Provides essential functions for implementing the GPLFM for joint input-state estimation using an MDOF cantilever system, cast into a modally reduced-order state-space model with acceleration-only measurements. At this stage, the code is primarily useful as a starting point for further tool development and for instructional purposes. 
 
 
 ## Documentation
