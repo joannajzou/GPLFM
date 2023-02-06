@@ -16,6 +16,11 @@ Provides essential functions for implementing the GPLFM for joint input-state es
 
 The GPFLM is a Bayesian joint input-state estimator which infers the dynamic response of a structural system subject to unknown excitation. An augmented state-space model, which combines a physics-driven model of the system with a data-driven model of latent variables, characterizes the joint relationship between unknown inputs and states with a GP prior. Posterior inference of latent states is obtained via Gaussian process regression of measured states, performed sequentially using Kalman filtering and RTS smoothing.
 
+For more details, refer to Zou et al. (2022). 
+
+![input](/figures/gplfm_flowchart.png)
+
+
 **Getting started**
 
 Run the file `run_GPLFM_Modal.m` in MATLAB (R2021a).
