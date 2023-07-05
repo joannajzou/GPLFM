@@ -2,7 +2,7 @@
 
 A MATLAB implementation of the Gaussian process latent force model (GPLFM). 
 
-This code is a supplement to [**J. Zou, E. Lourens, A. Cicirello (2022). "Virtual sensing of subsoil strain response in monopile-based offshore wind turbines via Gaussian process latent force models."**](https://arxiv.org/abs/2207.05901) Please cite this work if you use or refer to any parts of this repository. 
+This code is a supplement to [**J. Zou, E. Lourens, A. Cicirello (2023). "Virtual sensing of subsoil strain response in monopile-based offshore wind turbines via Gaussian process latent force models."**](https://doi.org/10.1016/j.ymssp.2023.110488) Please cite this work if you use or refer to any parts of this repository. 
 
 
 ## Version history 
